@@ -29,9 +29,9 @@
 ### （変更前）
 #### books = Book.all
 ####  @books = Book.all
-###　　(変更後)
-####　books = Book.by_weekly_favorites_count
-####　@books = Book.by_weekly_favorites_count
+### (変更後)
+#### books = Book.by_weekly_favorites_count
+#### @books = Book.by_weekly_favorites_count
 
 #### （後日サンプルコードで復習したら内容次第で更新予定。）
 -------------------------
