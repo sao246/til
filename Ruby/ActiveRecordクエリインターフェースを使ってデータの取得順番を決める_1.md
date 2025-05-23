@@ -32,13 +32,13 @@
 ```
 --------------------------
 ### Bookモデルに指定したメソッドの使い方
-### 今回は投稿一覧（Indexビュー）のデータの並べ替えなので、booksコントローラに作ったindexメソッドの以下の定義を変更。
-### （変更前）
+#### 今回は投稿一覧（Indexビュー）のデータの並べ替えなので、booksコントローラに作ったindexメソッドの以下の定義を変更。
+#### （変更前）
 ```
   books = Book.all
   @books = Book.all
 ```
-### (変更後)
+#### (変更後)
 ```
   books = Book.by_weekly_favorites_count
   @books = Book.by_weekly_favorites_count
