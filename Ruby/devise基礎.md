@@ -38,4 +38,64 @@ Running via Spring preloader in process 11238
 #### ・デフォルトで生成されるマイグレーションファイルには名前のカラムがないので、db　migrateする前にカラム追加してから実施する必要あり。
 
 ## 複数権限（name spaceでadminとPublicに分ける）の場合
+#### gemのインストールは大前提
+1. 各権限用のモデルを準備する
+```
+rails generate devise User
+rails generate devise Admin
+rails db:migrate でマイグレート。
+```
 
+2. ルーティングの設定（⭐︎ここが重要）
+```
+publicの設定例:
+  scope module: 'public' do
+    resource :users
+  end
+  → こう書くと、
+      コントローラ: Public::UsersController
+      ビュー: app/views/public/users/
+    というルーティングになる。
+```
+
+```
+deviseのルーティング例：
+  devise_for :users, controllers: {
+    # public名前空間に作ったオリジナル（カスタム）コントローラに差し替え設定をする
+    registrations: 'public/registrations',
+    sessions: 'public/sessions',
+  }
+```
+
+####    カスタムコントローラを使う理由：
+  * deviseのデフォルトの挙動を変えたい・追加したい場合に処理をするため。
+  * devise以外の他のコントローラと構成を統一したい場合（今回はこの理由が大きい）
+  今回はpublic/~ とadmin/~で明示的に名前空間を分けたいので、deviseもこの運用に揃える。
+  こうすると明示的に見やすい＆管理しやすい
+
+3. ビューの分離
+#### 必要なビューを仕様に応じて、管理者とPublicユーザー用にそれぞれDeviseビューを用意する
+```
+例）
+app/views/admin/sessions/new.html.erb
+app/views/users/sessions/new.html.erb
+```
+
+4. アクセス制御の設定
+#### Admin/Publicの処理用コントローラに以下のようにそれぞれ書くことで、権限を分離する。
+```
+管理者用コントローラー：
+before_action :authenticate_admin!
+```
+
+```
+Public用コントローラー：
+before_action :authenticate_user!
+```
+
+#### 特殊ケース: ゲストユーザーログイン等のルーティングはこちら
+```
+devise_scope :user do
+  post '/guest_sign_in', to: 'public/sessions#guest_sign_in'
+end
+```
