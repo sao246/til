@@ -1,2 +1,0 @@
-## matplotlib学習
-## 
