@@ -48,8 +48,8 @@ brew install python
 -----------------------
 #### 結果、、これでもうまくいかず！！
 #### しかし、それでもvenvがうまくいかず、原因は、VScodeが見ているPythonがHomebrewのPythonではない可能性あり、パスの確認をすることに。パスをみたところ、パスは合っていた。
-#### ではなぜうまくいかないか？：　調べると、Intel版のHomebrew Pythonと、Apple Silicon版のPythonというのがあるらしい！今回先にインストールしているのはIntelだったので、MacのOSがM3の場合、これだとうまくいかないらしい…（先に教えて）
-#### Apple Silicon版を再度インストール！　
+#### ではなぜうまくいかないか？：　調べると、Intel版のHomebrew Pythonと、Apple Silicon版のPythonというのがあるらしい！今回先にインストールしているのはIntelだったので、MacのOSがM3の場合、これだとうまくいかないらしい
+#### そのためApple Silicon版を再度インストール　
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
